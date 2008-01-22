@@ -13,7 +13,7 @@ function getHead() {
 function makeStyle(css) {
     var style =  document.createElement('style');
     style.type = 'text/css';
-    style.innerHTML = css;
+    style.appendChild(document.createTextNode(css));
     return style;
 }
 
