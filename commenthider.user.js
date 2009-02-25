@@ -50,11 +50,13 @@ function Toggle(element) {
 
     this.makeToggler = function(text) {
 	var self = this;
+        var togglerDiv = document.createElement('div');
 	var toggler = document.createElement('a');
 	toggler.href = "javascript:void(0);";
 	toggler.addEventListener("click", function() { self.toggle(); }, false);
 	toggler.innerHTML = text || 'toggle';
-	return toggler;
+	togglerDiv.appendChild(toggler);
+	return togglerDiv;
     };
 }
 
@@ -67,23 +69,23 @@ function hideSingleComment(comment) {
 
 injectCSS(".gm_obnoxious { display : none !important; }");
 
+var aboutSection = document.getElementById("About");
 var commentsSection = document.getElementById("DiscussPhoto");
-var commentsTable = commentsSection.getElementsByTagName('table')[0];
 
-var numberOfComments = document.evaluate("count(//td[@class='Said'])", document,
+var numberOfComments = document.evaluate("count(//div[@class='comment-block'])", document,
 					 null, XPathResult.NUMBER_TYPE, null)
     .numberValue;
 
-var obnoxiousComments = document.evaluate("//tr/td[@class='Said' and p//img]", commentsSection,
+var obnoxiousComments = document.evaluate("//div[@class='comment-content' and p//img]", commentsSection,
 					  null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
 
-var commentsHider = new Toggle(commentsTable);
+var commentsHider = new Toggle(commentsSection);
 commentsHider.turnOn();
-commentsSection.insertBefore(commentsHider.makeToggler
-			     ("(toggle " + numberOfComments + " comment"
-			      + (numberOfComments == 1 ? "" : "s") + ", "
-			      + obnoxiousComments.snapshotLength + " with images)")
-			     , commentsTable);
+aboutSection.insertBefore(commentsHider.makeToggler
+                          ("(toggle " + numberOfComments + " comment"
+                           + (numberOfComments == 1 ? "" : "s") + ", "
+                           + obnoxiousComments.snapshotLength + " with images)")
+                          , commentsSection);
 
 for (var i = 0; i < obnoxiousComments.snapshotLength; i++) {
     hideSingleComment(obnoxiousComments.snapshotItem(i));
