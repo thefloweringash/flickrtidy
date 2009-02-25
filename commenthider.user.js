@@ -64,7 +64,7 @@ function hideSingleComment(comment) {
     var content = comment.getElementsByTagName('p')[0];
     var toggle = new Toggle(content);
     toggle.turnOn();
-    comment.insertBefore(toggle.makeToggler('toggle comment with image'), content);
+    comment.insertBefore(toggle.makeToggler('toggle comment with group link'), content);
 }
 
 injectCSS(".gm_obnoxious { display : none !important; }");
@@ -76,7 +76,8 @@ var numberOfComments = document.evaluate("count(//div[@class='comment-block'])",
 					 null, XPathResult.NUMBER_TYPE, null)
     .numberValue;
 
-var obnoxiousComments = document.evaluate("//div[@class='comment-content' and p//img]", commentsSection,
+var obnoxiousComments = document.evaluate("//div[@class='comment-content' and .//a[contains(@href, 'flickr.com/groups')]]",
+                                          commentsSection,
 					  null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
 
 var commentsHider = new Toggle(commentsSection);
@@ -84,7 +85,7 @@ commentsHider.turnOn();
 aboutSection.insertBefore(commentsHider.makeToggler
                           ("(toggle " + numberOfComments + " comment"
                            + (numberOfComments == 1 ? "" : "s") + ", "
-                           + obnoxiousComments.snapshotLength + " with images)")
+                           + obnoxiousComments.snapshotLength + " with group links)")
                           , commentsSection);
 
 for (var i = 0; i < obnoxiousComments.snapshotLength; i++) {
