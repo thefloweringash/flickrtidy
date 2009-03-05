@@ -50,13 +50,13 @@ function Toggle(element) {
 
     this.makeToggler = function(text) {
 	var self = this;
-        var togglerDiv = document.createElement('div');
+	var togglerContainer = document.createElement('p');
 	var toggler = document.createElement('a');
 	toggler.href = "javascript:void(0);";
 	toggler.addEventListener("click", function() { self.toggle(); }, false);
 	toggler.innerHTML = text || 'toggle';
-	togglerDiv.appendChild(toggler);
-	return togglerDiv;
+	togglerContainer.appendChild(toggler);
+	return togglerContainer;
     };
 }
 
@@ -69,8 +69,8 @@ function hideSingleComment(comment) {
 
 injectCSS(".gm_obnoxious { display : none !important; }");
 
-var aboutSection = document.getElementById("About");
-var commentsSection = document.getElementById("DiscussPhoto");
+var aboutSection = document.getElementById("DiscussPhoto");
+var commentsSection = document.getElementById("DiscussPhoto").getElementsByTagName('div')[0];
 
 var numberOfComments = document.evaluate("count(//div[@class='comment-block'])", document,
 					 null, XPathResult.NUMBER_TYPE, null)
