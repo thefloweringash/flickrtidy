@@ -70,7 +70,10 @@ function hideSingleComment(comment) {
 injectCSS(".gm_obnoxious { display : none !important; }");
 
 var aboutSection = document.getElementById("DiscussPhoto");
-var commentsSection = document.getElementById("DiscussPhoto").getElementsByTagName('div')[0];
+
+var commentsSection = document.evaluate(".//div[.//div/@class='comment-block']", aboutSection,
+                                        null, XPathResult.ANY_UNORDERED_NODE_TYPE, null)
+    .singleNodeValue;
 
 var numberOfComments = document.evaluate("count(//div[@class='comment-block'])", document,
 					 null, XPathResult.NUMBER_TYPE, null)
