@@ -79,7 +79,7 @@ var numberOfComments = document.evaluate("count(//div[@class='comment-block'])",
 					 null, XPathResult.NUMBER_TYPE, null)
     .numberValue;
 
-var obnoxiousComments = document.evaluate("//div[@class='comment-content' and p//img]", commentsSection,
+var obnoxiousComments = document.evaluate(".//div[@class='comment-content' and p//img]", commentsSection,
 					  null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
 
 var commentsHider = new Toggle(commentsSection);
